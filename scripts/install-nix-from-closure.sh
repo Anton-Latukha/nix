@@ -11,7 +11,6 @@
 
 
 
-echo "performing a single-user installation of Nix..." >&2
 
 
 
