@@ -18,10 +18,6 @@
 
 
 
-if ! "$nix/bin/nix-store" --load-db < "$self/.reginfo"; then
-    echo "$0: unable to register valid paths" >&2
-    exit 1
-fi
 
 . "$nix/etc/profile.d/nix.sh"
 
