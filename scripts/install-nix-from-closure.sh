@@ -1,10 +1,6 @@
 #!/bin/sh
 
 
-dest="/nix"
-self="$(dirname "$0")"
-nix="@nix@"
-cacert="@cacert@"
 
 
 if ! [ -e "$self/.reginfo" ]; then
