@@ -22,9 +22,6 @@
 
 
 
-if [ -z "$_NIX_INSTALLER_TEST" ]; then
-    $nix/bin/nix-channel --update nixpkgs
-fi
 
 added=
 if [ -z "$NIX_INSTALLER_NO_MODIFY_PROFILE" ]; then
