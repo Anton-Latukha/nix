@@ -1,6 +1,5 @@
 #!/bin/sh
 
-set -e
 
 dest="/nix"
 self="$(dirname "$0")"
