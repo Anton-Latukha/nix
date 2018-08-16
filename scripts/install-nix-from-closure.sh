@@ -21,11 +21,6 @@
 
 
 
-# Install an SSL certificate bundle.
-if [ -z "$NIX_SSL_CERT_FILE" ] || ! [ -f "$NIX_SSL_CERT_FILE" ]; then
-    $nix/bin/nix-env -i "$cacert"
-    export NIX_SSL_CERT_FILE="$HOME/.nix-profile/etc/ssl/certs/ca-bundle.crt"
-fi
 
 # Subscribe the user to the Nixpkgs channel and fetch it.
 if ! $nix/bin/nix-channel --list | grep -q "^nixpkgs "; then
