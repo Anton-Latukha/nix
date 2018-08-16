@@ -5,10 +5,6 @@
 
 
 
-if [ -z "$HOME" ]; then
-    echo "$0: \$HOME is not set" >&2
-    exit 1
-fi
 
 # macOS support for 10.10 or higher
 if [ "$(uname -s)" = "Darwin" ]; then
