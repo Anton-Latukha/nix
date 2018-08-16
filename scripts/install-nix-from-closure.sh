@@ -17,7 +17,6 @@
 
 
 
-echo "initialising Nix database..." >&2
 if ! $nix/bin/nix-store --init; then
     echo "$0: failed to initialize the Nix database" >&2
     exit 1
