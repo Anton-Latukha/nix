@@ -508,3 +508,21 @@ checkInstallerMode() {
 }
 
 }
+
+
+###############################
+###  Exec installer mode
+###############################
+{
+
+execInstallerMode() {
+    if [ "$INSTALL_MODE" = "daemon" ]; then
+        notice '
+
+    Entering daemon-based installer
+    '
+        exec "$self/install-multi-user"
+    fi
+}
+
+}
