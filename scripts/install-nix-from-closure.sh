@@ -19,7 +19,6 @@
 
 
 
-. "$nix/etc/profile.d/nix.sh"
 
 if ! "$nix/bin/nix-env" -i "$nix"; then
     echo "$0: unable to install Nix into your default profile" >&2
