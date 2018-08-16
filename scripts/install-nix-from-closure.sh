@@ -7,14 +7,6 @@
 
 
 
-# Determine if we should punt to the single-user installer or not
-if [ "$(uname -s)" = "Darwin" ]; then
-    INSTALL_MODE=daemon
-elif [ "$(uname -s)" = "Linux" ] && [ -e /run/systemd/system ]; then
-    INSTALL_MODE=daemon
-else
-    INSTALL_MODE=no-daemon
-fi
 
 # Trivially handle the --daemon / --no-daemon options
 if [ "x${1:-}" = "x--no-daemon" ]; then
