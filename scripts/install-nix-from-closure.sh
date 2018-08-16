@@ -3,9 +3,6 @@
 
 
 
-if ! [ -e "$self/.reginfo" ]; then
-    echo "$0: incomplete installer (.reginfo is missing)" >&2
-fi
 
 if [ -z "$USER" ]; then
     echo "$0: \$USER is not set" >&2
