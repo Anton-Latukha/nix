@@ -470,3 +470,41 @@ checkingRequirements() {
 }
 
 }
+
+
+###############################
+###  Check installer mode
+###############################
+{
+
+checkInstallerMode() {
+    # Determine if POSIX or daemon installer should be used
+    if [ "$(uname -s)" = "Darwin" ]; then
+        readonly INSTALL_MODE=daemon
+    elif [ "$(uname -s)" = "Linux" ] && [ -e /run/systemd/system ]; then
+        readonly INSTALL_MODE=daemon
+    else
+        readonly INSTALL_MODE=no-daemon
+    fi
+
+    # Trivially handle the --daemon / --no-daemon options
+    if [ "x${1:-}" = "x--no-daemon" ]; then
+        readonly INSTALL_MODE=no-daemon
+    elif [ "x${1:-}" = "x--daemon" ]; then
+        readonly INSTALL_MODE=daemon
+    elif [ "x${1:-}" != "x" ]; then
+        error '
+
+    Nix Installer [--daemon|--no-daemon]
+      --daemon:    Force the installer to use the Daemon
+                   based installer, even though it may not
+                   work.
+
+      --no-daemon: Force a no-daemon, single-user
+                   installation even when the preferred
+                   method is with the daemon.
+    '
+    fi
+}
+
+}
