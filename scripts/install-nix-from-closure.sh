@@ -4,10 +4,6 @@
 
 
 
-if [ -z "$USER" ]; then
-    echo "$0: \$USER is not set" >&2
-    exit 1
-fi
 
 if [ -z "$HOME" ]; then
     echo "$0: \$HOME is not set" >&2
