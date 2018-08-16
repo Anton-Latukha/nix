@@ -16,21 +16,6 @@
 
 
 
-for i in $(cd "$self/store" >/dev/null && echo ./*); do
-    printf "." >&2
-    i_tmp="$dest/store/$i.$$"
-    if [ -e "$i_tmp" ]; then
-        rm -rf "$i_tmp"
-    fi
-    if ! [ -e "$dest/store/$i" ]; then
-        cp -Rp "$self/store/$i" "$i_tmp"
-        chmod -R a-w "$i_tmp"
-        chmod +w "$i_tmp"
-        mv "$i_tmp" "$dest/store/$i"
-        chmod -w "$dest/store/$i"
-    fi
-done
-echo "" >&2
 
 echo "initialising Nix database..." >&2
 if ! $nix/bin/nix-store --init; then
