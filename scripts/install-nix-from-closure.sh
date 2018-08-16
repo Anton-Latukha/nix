@@ -796,3 +796,67 @@ installNix() {
 }
 
 }
+
+
+###############################
+###  Postinstall
+###############################
+{
+
+postinstall() {
+    notice '
+
+    Launching postinstall tasks:
+    '
+    added=0
+    if [ -z "$NIX_INSTALLER_NO_MODIFY_PROFILE" ]; then
+        # Make shell to source nix.sh during login.
+        readonly nix_profile="$HOME/.nix-profile/etc/profile.d/nix.sh"
+        for file in .bash_profile .bash_login .profile; do
+            user_profile="$HOME/$file"
+            if [ -w "$user_profile" ]; then
+                if ! grep -q "$nix_profile" "$user_profile"; then
+                    notice "
+
+    Modifying $user_profile...
+    "
+                    printf 'if [ -e %s ]; then . %s; fi # added by Nix installer\n'\
+                           "$nix_profile" "$nix_profile" >> "$user_profile"
+                fi
+                added=1
+                break
+            fi
+        done
+    fi
+
+    # TODO: Investigate use of:
+    # "Attempting to execute login from any shell but the login shell will produce an error message"
+
+    if [ "$added" -eq 0 ]; then
+        notice "
+
+    Installation finished!
+    To ensure that environment variables are set for Nix,
+    please add the line
+
+    . $nix-profile
+
+    to your shell profile (e.g. ~/.profile).
+    "
+
+    else
+        notice "
+
+    Installation finished!
+    To use Nix - re-login to shell environment.
+    Or to use it directly now, in the current runtime environment -
+    run this script to set Nix-specific environment variables:
+
+    . $nix-profile
+
+    in current runtime environment.
+    "
+    fi
+}
+
+}
