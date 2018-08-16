@@ -15,7 +15,6 @@
 
 
 
-printf "copying Nix to %s..." "${dest}/store" >&2
 
 for i in $(cd "$self/store" >/dev/null && echo ./*); do
     printf "." >&2
