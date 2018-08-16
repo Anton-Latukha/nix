@@ -20,10 +20,6 @@
 
 
 
-if ! "$nix/bin/nix-env" -i "$nix"; then
-    echo "$0: unable to install Nix into your default profile" >&2
-    exit 1
-fi
 
 # Install an SSL certificate bundle.
 if [ -z "$NIX_SSL_CERT_FILE" ] || ! [ -f "$NIX_SSL_CERT_FILE" ]; then
