@@ -9,11 +9,6 @@
 
 
 
-if [ "$INSTALL_MODE" = "daemon" ]; then
-    printf '\e[1;31mSwitching to the Daemon-based Installer\e[0m\n'
-    exec "$self/install-multi-user"
-    exit 0
-fi
 
 if [ "$(id -u)" -eq 0 ]; then
     printf '\e[1;31mwarning: installing Nix as root is not supported by this script!\e[0m\n'
