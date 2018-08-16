@@ -14,7 +14,6 @@
 
 
 
-mkdir -p $dest/store
 
 printf "copying Nix to %s..." "${dest}/store" >&2
 
