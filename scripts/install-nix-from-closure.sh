@@ -700,6 +700,24 @@ installNix() {
     "
         fi
     }
+
+    installCerts() {
+        # Install an SSL certificate bundle.
+        trap 'installCertsRevert $LINENO $?' INT TERM ABRT QUIT
+        subscribeChannelsRevert() {
+            errorRevert "Received Error signal from line $1"
+            errorRevert "Reverting installation of certificate bundle"
+            "$nix/bin/nix-env" --uninstall "$cacert"
+            error "
+
+    Changes reverted.
+    " "$2"
+        }
+        print 'Installing SSL certificate bundle.'
+        "$nix/bin/nix-env" --install "$cacert"
+        readonly NIX_SSL_CERT_FILE="$HOME/.nix-profile/etc/ssl/certs/ca-bundle.crt"
+        export NIX_SSL_CERT_FILE
+    }
 }
 
 }
