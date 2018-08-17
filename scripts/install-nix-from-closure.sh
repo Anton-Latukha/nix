@@ -618,6 +618,24 @@ installNix() {
             fi
         fi
     }
+
+    createStore() {
+        trap createStoreRevert 1
+        createStoreRevert() {
+            error "
+
+    Script tried to create '$dest/store', but it already exists.
+    We do checks '$dest/store' existence before installation.
+    Probaly something went wrong with the installation script.
+
+    Please:
+      * gather information of your setup conditions
+      * search does BUG exists
+      * make further actions
+    "
+        }
+        mkdir -p "$dest"/store
+    }
 }
 
 }
