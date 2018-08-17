@@ -297,6 +297,15 @@ contactUs() {
 checkingRequirements() {
 # NOTE: This function - checks only, - do not make any changes to the system.
 # And becouse of that and POSIx - it can be universally reused.
+
+    checkBundle() {
+        if ! [ -e "$self/.reginfo" ]; then
+            error "
+
+    Installer is incomplete ('$self/.reginfo' is missing)
+    "
+        fi
+    }
 }
 
 }
