@@ -718,6 +718,23 @@ installNix() {
         readonly NIX_SSL_CERT_FILE="$HOME/.nix-profile/etc/ssl/certs/ca-bundle.crt"
         export NIX_SSL_CERT_FILE
     }
+
+    subscribeChannels() {
+        # Subscribe the user to the Nixpkgs channel and fetch it.
+        trap 'subscribeChannelsRevert $LINENO $?' INT TERM ABRT QUIT
+        subscribeChannelsRevert() {
+            errorRevert "Received Error signal from line $1"
+            errorRevert "Reverting channels subscriptions: nixpkgs"
+            "$nix"/bin/nix-channel --remove nixpkgs
+            error "
+
+    Changes reverted.
+    " "$2"
+        }
+        readonly channelUrl='https://nixos.org/channels/nixpkgs-unstable'
+        print "Subscribing to channel: nixpkgs=$channelUrl"
+        "$nix"/bin/nix-channel --add "$channelUrl"
+    }
 }
 
 }
