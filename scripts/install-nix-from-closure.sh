@@ -459,6 +459,14 @@ checkingRequirements() {
     fi
 
     }
+
+    checkBundle
+
+    checkEnv
+
+    checkHome
+
+    checkDest
 }
 
 }
