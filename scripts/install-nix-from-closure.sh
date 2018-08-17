@@ -390,6 +390,75 @@ checkingRequirements() {
         fi
 
     }
+
+    checkDest() {
+     if [ -e "$dest" ]; then
+        # Destination directory exist. Nix is/was installed before, be cautious.
+
+        # Once more -d also resolves soft links to their targets
+        if [ ! -d "$dest" ]; then
+            error "
+
+    Destination '$dest' exists, but is not a directory, nor a link to one.
+    "
+        fi
+
+        if [ ! -w $dest ]; then
+            # Do not mindlessly help a user to chroot the directory
+            # - that is a disservice.
+            # Let user who does not know - at least a chanse to search and read
+            # on the topic.
+            # Person needs to know/find command themselves, and know about
+            # consequences.
+            error "
+
+    Destination directory '$dest' exists, but is not writable for user '$USER'.
+
+    To enable multi-user support see:
+    http://nixos.org/nix/manual/#ssec-multi-user
+
+    To nevertheless do a single-user install for '$USER':
+    recursively set user '$USER' as owner for '$dest' directory.
+    "
+        fi
+
+        # If checks are OK
+        warning "
+
+    Destination directory '$dest' already exists. Skipping creation of '$dest'.
+    "
+
+    fi
+
+    if [ -e "$dest"/store ]; then
+
+        if [ ! -d "$dest"/store ]; then
+            error "
+
+    Store directory '$dest/store' exists and it's not a directory nor a link
+    to one.
+    "
+        fi
+
+        if [ ! -w "$dest"/store ]; then
+            error "
+
+    Store directory '$dest/store' exists, but is not writable for user '$USER'.
+
+    This could indicate that another user has already performed
+    a single-user installation of Nix on this system.
+
+    If you wish to enable multi-user support see:
+    https://nixos.org/nix/manual/#ssec-multi-user
+
+    To nevertheless do a single-user install for '$USER':
+    recursively set user '$USER' as owner for '$dest/store' directory.
+    "
+        fi
+
+    fi
+
+    }
 }
 
 }
