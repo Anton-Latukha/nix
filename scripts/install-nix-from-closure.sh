@@ -636,6 +636,35 @@ installNix() {
         }
         mkdir -p "$dest"/store
     }
+
+    copyNix() {
+        print "Copying Nix to '$dest/store': "
+
+        for object in $(cd "$self/store" >/dev/null && echo ./*); do
+            printf '.'
+            get="$self/store/$object"
+            tmp="$dest/store/$object.$$" ## $$ - is process PID
+            put="$dest/store/$object"
+
+            # If $dest/store/$object.$$ exists - remove. Very certain - it is a directory from previous cycle.
+            if [ -e "$tmp" ]; then
+                rm -rf "$tmp"
+            fi
+            # If $put does not exist - populate it.
+            if ! [ -e "$put" ]; then
+                # Copy $get to $tmp
+                cp -Rp "$get" "$tmp"
+                # Remove write permissions from $tmp recursively
+                chmod -R a-w "$tmp"
+                # Place $tmp as $put
+                mv "$tmp" "$put"
+            else
+                print "Already exists, skipping: '$put'"
+            fi
+
+        done
+        printf '\n'
+    }
 }
 
 }
