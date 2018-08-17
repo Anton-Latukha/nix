@@ -685,6 +685,21 @@ installNix() {
     "
         fi
     }
+
+    setupProfile() {
+        # Modifying current runtime environment variables to use Nix.
+        # Persistent changes are configured later.
+        print "Launching $nix/etc/profile.d/nix.sh"
+        # shellcheck source=/dev/null
+        . "$nix/etc/profile.d/nix.sh"
+        print "Left $nix/etc/profile.d/nix.sh"
+        if ! "$nix/bin/nix-env" -i "$nix"; then
+            error "
+
+    Unable to install Nix into your default profile
+    "
+        fi
+    }
 }
 
 }
