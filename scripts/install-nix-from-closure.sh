@@ -345,6 +345,51 @@ checkingRequirements() {
         fi
 
     }
+
+    checkHome() {
+        if [ ! -e "$HOME" ]; then
+            error "
+
+    Home directory '$HOME' does not exist.
+    "
+        fi
+
+    # -d also resolves symbolic soft links if they point to directory
+        if [ ! -d "$HOME" ]; then
+            error "
+
+    Home directory '$HOME' is not a directory, nor a link to one.
+    "
+        fi
+
+        if [ ! -w "$HOME" ]; then
+            error "
+
+    Home directory '$HOME' is not writable for user '$USER'. No deal.
+    "
+        fi
+
+        # POSIX: `ls` is only able. No `test -O`, `find` can do this in POSIX
+        # AWK is more portable then `cut -d'c' -fN`
+        if [ "$(ls -ld "$HOME" | awk '{print $3}')" != "$USER" ]; then
+            contactUs    # Let's get particular reports and solutions
+            error "
+
+    Home directory '$HOME' is not owned by user '$USER'.
+    If you have legitimate case, please file a bug with description.
+    We gather information on particular cases.
+    "
+        fi
+
+        if [ ! -x "$HOME" ]; then
+            error "
+
+    Home directory '$HOME' is not marked as executable for user '$USER',
+    how then we are going to go into it?
+    "
+        fi
+
+    }
 }
 
 }
