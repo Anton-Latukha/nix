@@ -665,6 +665,26 @@ installNix() {
         done
         printf '\n'
     }
+
+    initializeDB() {
+        notice "
+
+    Initializing Nix database...
+    "
+        if ! "$nix/bin/nix-store" --init; then
+            error "
+
+    Failed to initialize the Nix database
+    "
+        fi
+
+        if ! "$nix/bin/nix-store" --load-db < "$self/.reginfo"; then
+            error "
+
+    Unable to register valid paths
+    "
+        fi
+    }
 }
 
 }
